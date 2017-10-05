@@ -15,8 +15,42 @@ public class Matrix {
 	
 	public void rref() {
 		moveZeroRowsToBottom();
-		// sort rows by length
-		// move all zero rows to the bottom
+		int colHead = 0;
+		int curRow = 0;
+		while (curRow < numRows) {
+			if (colHead >= numCols) {
+				break;
+			}
+			if (matrix[curRow][colHead] == 0) {
+				// go find a row and swap it
+				boolean foundRow = false;
+				for (int i = curRow + 1; i < numRows; i++) {
+					if (matrix[i][colHead] != 0) {
+						this.swapRows(curRow, i);
+						foundRow = true;
+						break;
+					}
+				}
+				
+				if (!foundRow) {
+					colHead++;
+				}
+			} else {
+				this.multiplyRow(curRow, 1 /matrix[curRow][colHead]);
+				for (int i = curRow + 1; i < numRows; i++) {
+					if (matrix[i][colHead] != 0) {
+						this.addRowToRow(curRow, i, -matrix[i][colHead]);
+					} else {
+						break;
+					}
+				}
+				curRow++;
+				colHead++;
+			}
+			
+			
+		}
+		// sort rows by lengthm
 	}
 	
 	private void moveZeroRowsToBottom() {
@@ -91,9 +125,9 @@ public class Matrix {
 		int cur_row = 0, cur_col = 0;
 		for (; cur_row < numRows; cur_row++) {
 			for (cur_col = 0; cur_col < numCols - 1; cur_col++) {
-				System.out.printf("%.2f ", matrix[cur_row][cur_col]);
+				System.out.printf("%.2f ", Math.abs(matrix[cur_row][cur_col]));
 			}
-			System.out.printf("%.2f\n", matrix[cur_row][numCols - 1]);
+			System.out.printf("%.2f\n", Math.abs(matrix[cur_row][numCols - 1]));
 		}
 		System.out.println();
 	}
