@@ -8,11 +8,9 @@ import java.io.IOException;
 public class Main {
 	
 	public static void main(String[] args) {
-		final String INPUT_FILE = "3x3_test.txt";
+		final String INPUT_FILE = "3x3_inverse_test_2.txt";
 		Matrix matrix = new Matrix(readMatrixFromFile(INPUT_FILE));
-		matrix.print_matrix();
 		matrix.rref();
-		matrix.print_matrix();
 	}
 
 	private static float[][] readMatrixFromFile(String inputFile) {

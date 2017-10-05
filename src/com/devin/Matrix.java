@@ -14,6 +14,8 @@ public class Matrix {
 	}
 	
 	public void rref() {
+		System.out.println("Starting Matrix:");
+		this.print_matrix();
 		moveZeroRowsToBottom();
 		int colHead = 0;
 		int curRow = 0;
@@ -26,20 +28,25 @@ public class Matrix {
 				boolean foundRow = false;
 				for (int i = curRow + 1; i < numRows; i++) {
 					if (matrix[i][colHead] != 0) {
+						System.out.printf("Swapped rows %d and %d:\n", curRow, i);
 						this.swapRows(curRow, i);
+						this.print_matrix();
 						foundRow = true;
 						break;
 					}
 				}
-				
 				if (!foundRow) {
 					colHead++;
 				}
 			} else {
-				this.multiplyRow(curRow, 1 /matrix[curRow][colHead]);
+				System.out.printf("Multiplied row %d by %.2f\n", curRow, 1 / matrix[curRow][colHead]);
+				this.multiplyRow(curRow, 1 / matrix[curRow][colHead]);
+				this.print_matrix();
 				for (int i = curRow + 1; i < numRows; i++) {
 					if (matrix[i][colHead] != 0) {
+						System.out.printf("Added %.2f of row %d to row %d:\n", -matrix[i][colHead], curRow, i);
 						this.addRowToRow(curRow, i, -matrix[i][colHead]);
+						this.print_matrix();
 					} else {
 						break;
 					}
@@ -47,10 +54,27 @@ public class Matrix {
 				curRow++;
 				colHead++;
 			}
-			
-			
 		}
-		// sort rows by lengthm
+		
+		curRow = numRows - 1;
+		while (curRow >= 0) {
+			if (this.isZeroRow(curRow)) {
+				curRow--;
+				continue;
+			}
+			colHead = 0;
+			while (matrix[curRow][colHead] != 1) {
+				colHead++;
+			}
+			for (int i = curRow - 1; i >= 0; i--) {
+				if (matrix[i][colHead] != 0) {
+					System.out.printf("Added %.2f of row %d to row %d:\n", -matrix[i][colHead], curRow, i);
+					this.addRowToRow(curRow, i, -matrix[i][colHead]);
+					this.print_matrix();
+				}
+			}
+			curRow--;
+		}
 	}
 	
 	private void moveZeroRowsToBottom() {
@@ -125,9 +149,17 @@ public class Matrix {
 		int cur_row = 0, cur_col = 0;
 		for (; cur_row < numRows; cur_row++) {
 			for (cur_col = 0; cur_col < numCols - 1; cur_col++) {
-				System.out.printf("%.2f ", Math.abs(matrix[cur_row][cur_col]));
+				float num = matrix[cur_row][cur_col];
+				if (num == -0) {
+					num = Math.abs(num);
+				}
+				System.out.printf("%.2f ", num);
 			}
-			System.out.printf("%.2f\n", Math.abs(matrix[cur_row][numCols - 1]));
+			float num = matrix[cur_row][cur_col];
+			if (num == -0) {
+				num = Math.abs(num);
+			}
+			System.out.printf("%.2f\n", num);
 		}
 		System.out.println();
 	}
