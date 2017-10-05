@@ -9,20 +9,10 @@ public class Main {
 	
 	public static void main(String[] args) {
 		final String INPUT_FILE = "3x3_test.txt";
-		float[][] matrix = readMatrixFromFile(INPUT_FILE);
-		print_matrix(matrix);
-	}
-	
-	private static void print_matrix(float[][] matrix) {
-		int rows = matrix.length;
-		int cols = matrix[0].length;
-		int cur_row = 0, cur_col = 0;
-		for (; cur_row < rows; cur_row++) {
-			for (cur_col = 0; cur_col < cols - 1; cur_col++) {
-				System.out.printf("%.2f ", matrix[cur_row][cur_col]);
-			}
-			System.out.printf("%.2f\n", matrix[cur_row][cur_col - 1]);
-		}
+		Matrix matrix = new Matrix(readMatrixFromFile(INPUT_FILE));
+		matrix.print_matrix();
+		matrix.swapRows(0, 1);
+		matrix.print_matrix();
 	}
 
 	private static float[][] readMatrixFromFile(String inputFile) {
