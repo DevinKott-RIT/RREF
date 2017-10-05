@@ -12,11 +12,24 @@ public class Matrix {
 		this.numRows = this.matrix.length;
 		this.numCols = this.matrix[0].length;
 	}
+	
+	public void multiplyRow(int row, float value) {
+		if (row < 0 || row >= numRows) {
+			System.err.printf("Invalid row: %d. Available: 0-%d rows\n", row, numRows - 1);
+			return;
+		}
+		
+		int colIndex = 0;
+		do {
+			matrix[row][colIndex] *= value;
+			colIndex++;
+		} while (colIndex < numCols);
+	}
 
 	public void swapRows(int row1, int row2) {
 		if (row1 < 0 || row2 < 0 || row1 >= numRows || row2 >= numCols) {
 			System.err.printf("Matrix does not have rows: %d and/or %d. Available: 0-%d rows, 0-%d cols.\n", row1, row2,
-					numRows, numCols);
+					numRows - 1, numCols - 1);
 			return;
 		}
 		int colIndex = 0;

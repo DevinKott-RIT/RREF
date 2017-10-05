@@ -11,7 +11,7 @@ public class Main {
 		final String INPUT_FILE = "3x3_test.txt";
 		Matrix matrix = new Matrix(readMatrixFromFile(INPUT_FILE));
 		matrix.print_matrix();
-		matrix.swapRows(0, 1);
+		matrix.multiplyRow(1, 2);
 		matrix.print_matrix();
 	}
 
